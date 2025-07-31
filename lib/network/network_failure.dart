@@ -5,9 +5,9 @@ enum NetworkFailureType {
   cancel,
   noConnection,
   badCertificate,
-  badResponse, // non-2xx response
+  badResponse,
   parse,
-  unauthorized, // convenience if you want to map 401 specially
+  unauthorized,
   unknown,
 }
 

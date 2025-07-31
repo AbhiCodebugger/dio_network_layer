@@ -4,13 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_clean_architect/network/api_result.dart';
 import 'package:flutter_clean_architect/network/dio_exceptions.dart';
 import 'package:flutter_clean_architect/network/network_failure.dart';
-
-typedef ResponseParser<T> = T Function(dynamic data);
-
-T _decodeAndParse<T>(dynamic data, ResponseParser<T> parser) {
-  final dynamic jsonData = (data is String) ? jsonDecode(data) : data;
-  return parser(jsonData);
-}
+import 'package:flutter_clean_architect/network/response_converter.dart';
 
 class NetworkManager {
   NetworkManager(this._dio);
@@ -51,17 +45,13 @@ class NetworkManager {
           ),
         );
       }
-      // 204 No Content -> parser can't parse null. Provide a default if T == void or similar.
       if (status == 204 ||
           response.data == null ||
           (response.data is String && (response.data as String).isEmpty)) {
-        // ignore parser and try to return a trivial value based on T.
-        // For now, throw parse error if parser can't handle null; you can customize.
         try {
           final parsed = parser(null);
           return ApiSuccess(parsed, statusCode: status);
         } catch (_) {
-          // Return raw null typed as T?; cast may fail; choose safe fallback.
           return ApiFailure(
             NetworkFailure(
               type: NetworkFailureType.parse,
@@ -71,7 +61,7 @@ class NetworkManager {
           );
         }
       }
-      final parsed = _decodeAndParse<T>(response.data, parser);
+      final parsed = decodeAndParse<T>(response.data, parser);
       return ApiSuccess(parsed, statusCode: status);
     } on DioException catch (e, st) {
       final failure = mapDioError(e).copyWith(stackTrace: st);

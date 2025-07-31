@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_clean_architect/network/api_result.dart';
 import 'package:flutter_clean_architect/network/network_manager.dart';
+import 'package:flutter_clean_architect/network/response_converter.dart';
 
 typedef ExtraField = Map<String, dynamic>;
 

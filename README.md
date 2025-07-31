@@ -37,7 +37,7 @@ lib
 -   [**dio**](https://pub.dev/packages/dio): A powerful HTTP client for Dart, which supports interceptors, global configuration, FormData, request cancellation, file downloading, timeout, etc.
 -   [**provider**](https://pub.dev/packages/provider): A state management library that is easy to understand and use.
 
-## Getting Started
+I've built a networking module that is completely isolated and packed with features to handle real-world scenarios gracefully. The goal is to make network requests reliable and easy to manage.
 
 To get a local copy up and running, follow these simple steps.
 
